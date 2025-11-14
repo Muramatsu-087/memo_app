@@ -1,0 +1,7 @@
+#<h1>Memos#show</h1>
+#<p>Find me in app/views/memos/show.html.erb</p>
+<h1><%= @memo.title %></h1>
+<p><%= @memo.content %></p>
+
+<%= link_to "編集", edit_memo_path(@memo), class: "btn btn-secondary" %>
+<%= link_to "一覧に戻る", memos_path, class: "btn btn-primary" %>

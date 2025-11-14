@@ -1,0 +1,25 @@
+<h1 class="mb-4">メモ一覧</h1>
+
+<%= link_to "新規作成", new_memo_path, class: "btn btn-primary mb-3" %>
+
+<div class="row">
+  <% @memos.each do |memo| %>
+    <div class="col-md-4">
+      <div class="card mb-3 shadow-sm memo-card">
+        <div class="card-body">
+          <h5 class="card-title"><%= memo.title %></h5>
+          <p class="card-text text-muted"><%= truncate(memo.content, length: 80) %></p>
+
+          <div class="d-flex justify-content-between">
+            <%= link_to "詳細", memo_path(memo), class: "btn btn-sm btn-outline-primary" %>
+            <%= link_to "編集", edit_memo_path(memo), class: "btn btn-sm btn-outline-secondary" %>
+            <%= link_to "削除", memo_path(memo),
+                        data: { turbo_method: "delete", turbo_confirm: "削除してよろしいですか？" },
+                        class: "btn btn-sm btn-outline-danger" %>
+
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
