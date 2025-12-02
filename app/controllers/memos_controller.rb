@@ -1,9 +1,15 @@
 class MemosController < ApplicationController
+  # ログインユーザーのみアクセス可能にする
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_memo, only: %i[show edit update destroy]
+  before_action :correct_user, only: %i[edit update destroy]
 
   # メモ一覧
   def index
-    @memos = Memo.all.order(created_at: :desc)
+    # ログインユーザーごとのメモだけを表示する場合
+    @memos = current_user ? current_user.memos.order(created_at: :desc) : Memo.none
+    # 全員のメモを見せたい場合は上書きせず
+    # @memos = Memo.all.order(created_at: :desc)
   end
 
   # 新規作成ページ
@@ -13,7 +19,8 @@ class MemosController < ApplicationController
 
   # 作成処理
   def create
-    @memo = Memo.new(memo_params)
+    # ログインユーザーに紐付けてメモ作成
+    @memo = current_user.memos.build(memo_params)
     if @memo.save
       redirect_to memos_path, notice: "メモを作成しました"
     else
@@ -46,6 +53,11 @@ class MemosController < ApplicationController
 
   def set_memo
     @memo = Memo.find(params[:id])
+  end
+
+  # 他ユーザーのメモを編集・削除できないように制御
+  def correct_user
+    redirect_to memos_path, alert: "権限がありません" unless @memo.user == current_user
   end
 
   def memo_params

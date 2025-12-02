@@ -4,14 +4,30 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <%= link_to "メモ一覧", root_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "新規作成", new_memo_path, class: "nav-link" %>
-        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <span class="nav-link">ようこそ、<%= current_user.email %>さん</span>
+          </li>
+          <li class="nav-item">
+            <%= link_to "メモ一覧", root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "新規作成", new_memo_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
