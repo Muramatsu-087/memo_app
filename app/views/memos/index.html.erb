@@ -14,9 +14,9 @@
             <%= link_to "詳細", memo_path(memo), class: "btn btn-sm btn-outline-primary" %>
             <%= link_to "編集", edit_memo_path(memo), class: "btn btn-sm btn-outline-secondary" %>
             <%= link_to "削除", memo_path(memo),
-                        data: { turbo_method: "delete", turbo_confirm: "削除してよろしいですか？" },
+                        data: { turbo_method: :delete, turbo_confirm: "削除してよろしいですか？" },
                         class: "btn btn-sm btn-outline-danger" %>
-
+          </div>
 
         </div>
       </div>
